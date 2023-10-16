@@ -1,4 +1,4 @@
-package com.danilkharytonov.retrofitroomrepository.data.model
+package com.danilkharytonov.retrofitroomrepository.domain.model
 
 data class Name(
     val first: String,

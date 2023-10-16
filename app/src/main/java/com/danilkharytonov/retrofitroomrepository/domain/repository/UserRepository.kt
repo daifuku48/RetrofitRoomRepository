@@ -1,7 +1,7 @@
 package com.danilkharytonov.retrofitroomrepository.domain.repository
 
-import com.danilkharytonov.retrofitroomrepository.data.model.Users
+import com.danilkharytonov.retrofitroomrepository.domain.model.User
 
 interface UserRepository {
-    suspend fun getAllUsers(results: Int): Users
+    suspend fun getAllUsers(results: Int): List<User>
 }

@@ -1,16 +1,15 @@
 package com.danilkharytonov.retrofitroomrepository.data.repository
 
-import com.danilkharytonov.retrofitroomrepository.data.model.Users
-import com.danilkharytonov.retrofitroomrepository.domain.mapper.UserListMapper
+import com.danilkharytonov.retrofitroomrepository.data.network.UserRetrofitInstance
+import com.danilkharytonov.retrofitroomrepository.data.network.model.mapToDomain
+import com.danilkharytonov.retrofitroomrepository.domain.model.User
 import com.danilkharytonov.retrofitroomrepository.domain.repository.UserRepository
-import com.danilkharytonov.retrofitroomrepository.network.UserRetrofitInstance
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
     private val userRetrofitInstance: UserRetrofitInstance,
-    private val userListMapper: UserListMapper
 ) : UserRepository {
-    override suspend fun getAllUsers(results: Int): Users {
-        return userListMapper.mapToDomain(userRetrofitInstance.getAllUsers(results))
+    override suspend fun getAllUsers(results: Int): List<User> {
+        return userRetrofitInstance.getAllUsers(results).mapToDomain().userList
     }
 }

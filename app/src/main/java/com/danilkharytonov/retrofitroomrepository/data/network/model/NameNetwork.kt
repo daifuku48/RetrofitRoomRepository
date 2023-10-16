@@ -1,4 +1,4 @@
-package com.danilkharytonov.retrofitroomrepository.network.model
+package com.danilkharytonov.retrofitroomrepository.data.network.model
 
 import com.google.gson.annotations.SerializedName
 

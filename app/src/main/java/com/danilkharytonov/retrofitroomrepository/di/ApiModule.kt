@@ -1,6 +1,6 @@
 package com.danilkharytonov.retrofitroomrepository.di
 
-import com.danilkharytonov.retrofitroomrepository.network.UserRetrofitInstance
+import com.danilkharytonov.retrofitroomrepository.data.network.UserRetrofitInstance
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

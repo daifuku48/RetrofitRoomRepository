@@ -2,7 +2,7 @@ package com.danilkharytonov.retrofitroomrepository.presentation.user_list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.danilkharytonov.retrofitroomrepository.data.model.User
+import com.danilkharytonov.retrofitroomrepository.domain.model.User
 import com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_list.GetAllUsersUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,7 +25,7 @@ class UserListViewModel @Inject constructor(
     private fun fetchUsers() {
         viewModelScope.launch {
             try {
-                _userList.emit(getAllUsersUseCase.execute(20).userList)
+                _userList.emit(getAllUsersUseCase.execute(20))
             } catch (e: Exception) {
                 e.printStackTrace()
             }
