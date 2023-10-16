@@ -10,7 +10,7 @@ class UserRepositoryImpl @Inject constructor(
     private val userRetrofitInstance: UserRetrofitInstance,
     private val userListMapper: UserListMapper
 ) : UserRepository {
-    override suspend fun getAllUsers(results: String): Users {
+    override suspend fun getAllUsers(results: Int): Users {
         return userListMapper.mapToDomain(userRetrofitInstance.getAllUsers(results))
     }
 }

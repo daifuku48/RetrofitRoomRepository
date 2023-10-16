@@ -36,6 +36,7 @@ class UserListAdapter(
     }
 
     object ItemCallback : DiffUtil.ItemCallback<User>() {
+
         override fun areItemsTheSame(oldItem: User, newItem: User): Boolean {
             return oldItem.email == newItem.email
         }

@@ -1,28 +1,29 @@
 package com.danilkharytonov.retrofitroomrepository.presentation.user_list
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.danilkharytonov.retrofitroomrepository.databinding.FragmentUserListBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class UserListFragment : Fragment() {
-    private var _binding : FragmentUserListBinding? = null
+    private var _binding: FragmentUserListBinding? = null
     private val binding
         get() = _binding!!
 
     private val viewModel: UserListViewModel by viewModels()
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentUserListBinding.inflate(inflater)
         return _binding?.root
@@ -30,22 +31,25 @@ class UserListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.fetchUsers()
-        Log.d("negr", "negr1")
-        binding.userList.layoutManager = LinearLayoutManager(requireContext())
-
-        val adapter = UserListAdapter{
-
+        val layoutManager = LinearLayoutManager(requireContext())
+        val adapter = UserListAdapter {
+            //add navigation to detail fragment
         }
-
-        viewModel.state.observe(viewLifecycleOwner){userState ->
-            Log.d("negr", "negr")
-            adapter.submitList(userState.users.user)
-        }
-
+        initList(adapter)
         binding.userList.adapter = adapter
-
+        binding.userList.layoutManager = layoutManager
     }
+
+    private fun initList(adapter: UserListAdapter) {
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                viewModel.userList.collect { userList ->
+                    adapter.submitList(userList)
+                }
+            }
+        }
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

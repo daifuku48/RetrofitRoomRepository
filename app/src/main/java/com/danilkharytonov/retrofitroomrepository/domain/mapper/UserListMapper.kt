@@ -11,7 +11,7 @@ import com.danilkharytonov.retrofitroomrepository.network.model.UsersNetwork
 
 class UserListMapper : Mapper<Users, UsersNetwork> {
     override fun mapToNetwork(domain: Users): UsersNetwork {
-        val userNetworkList = domain.user.map { user ->
+        val userNetworkList = domain.userList.map { user ->
             UserNetwork(
                 email = user.email,
                 gender = user.gender,
@@ -21,16 +21,15 @@ class UserListMapper : Mapper<Users, UsersNetwork> {
                     title = user.name.title
                 ),
                 picture = PictureNetwork(
-                    medium = user.picture.medium,
                     thumbnail = user.picture.thumbnail
                 )
             )
         }
-        return UsersNetwork(user = userNetworkList)
+        return UsersNetwork(userList = userNetworkList)
     }
 
     override fun mapToDomain(network: UsersNetwork): Users {
-        val userList = network.user.map { userNetwork ->
+        val userList = network.userList.map { userNetwork ->
             User(
                 email = userNetwork.email,
                 gender = userNetwork.gender,
@@ -40,11 +39,10 @@ class UserListMapper : Mapper<Users, UsersNetwork> {
                     title = userNetwork.name.title
                 ),
                 picture = Picture(
-                    medium = userNetwork.picture.medium,
                     thumbnail = userNetwork.picture.thumbnail
                 )
             )
         }
-        return Users(user = userList)
+        return Users(userList = userList)
     }
 }

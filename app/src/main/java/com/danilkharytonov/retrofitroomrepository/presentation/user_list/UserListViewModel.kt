@@ -1,30 +1,32 @@
 package com.danilkharytonov.retrofitroomrepository.presentation.user_list
 
-import android.util.Log
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.danilkharytonov.retrofitroomrepository.data.model.User
 import com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_list.GetAllUsersUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import java.net.UnknownHostException
 import javax.inject.Inject
 
 
 @HiltViewModel
 class UserListViewModel @Inject constructor(
     private val getAllUsersUseCase: GetAllUsersUseCase
-) : ViewModel(){
+) : ViewModel() {
+    private val _userList = MutableStateFlow<List<User>>(emptyList())
+    val userList = _userList.asStateFlow()
 
-    val state: MutableLiveData<UserState> = MutableLiveData()
+    init {
+        fetchUsers()
+    }
 
-    fun fetchUsers() {
+    private fun fetchUsers() {
         viewModelScope.launch {
-            Log.d("negr", "negr3")
-            try{
-                val users = getAllUsersUseCase.execute("20")
-                Log.d("negr", users.user.toString())
-            }catch (e: UnknownHostException){
+            try {
+                _userList.emit(getAllUsersUseCase.execute(20).userList)
+            } catch (e: Exception) {
                 e.printStackTrace()
             }
         }

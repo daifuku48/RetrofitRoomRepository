@@ -16,7 +16,7 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun providesUserListMapper() : UserListMapper{
+    fun providesUserListMapper(): UserListMapper {
         return UserListMapper()
     }
 
@@ -24,7 +24,8 @@ object RepositoryModule {
     @Singleton
     fun providesUserRepository(
         userRetrofitInstance: UserRetrofitInstance,
-        userListMapper: UserListMapper) : UserRepository {
+        userListMapper: UserListMapper
+    ): UserRepository {
         return UserRepositoryImpl(
             userRetrofitInstance = userRetrofitInstance,
             userListMapper = userListMapper

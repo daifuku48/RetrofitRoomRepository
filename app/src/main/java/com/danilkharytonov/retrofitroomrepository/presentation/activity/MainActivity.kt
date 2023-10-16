@@ -1,7 +1,7 @@
 package com.danilkharytonov.retrofitroomrepository.presentation.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.danilkharytonov.retrofitroomrepository.R
 import dagger.hilt.android.AndroidEntryPoint
 

@@ -1,6 +1,8 @@
 package com.danilkharytonov.retrofitroomrepository.network.model
 
+import com.google.gson.annotations.SerializedName
+
 data class PictureNetwork(
-    val medium: String,
+    @SerializedName("thumbnail")
     val thumbnail: String
 )

@@ -7,7 +7,7 @@ import javax.inject.Inject
 class GetAllUsersUseCase @Inject constructor(
     private val repository: UserRepository
 ) {
-    suspend fun execute(results: String) : Users{
+    suspend fun execute(results: Int): Users {
         return repository.getAllUsers(results)
     }
 }
