@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_list.GetAllUsersUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.net.UnknownHostException
 import javax.inject.Inject
 
 
@@ -19,8 +20,13 @@ class UserListViewModel @Inject constructor(
 
     fun fetchUsers() {
         viewModelScope.launch {
-            Log.d("negr", "negr")
-            state.value?.users = getAllUsersUseCase.execute("20")
+            Log.d("negr", "negr3")
+            try{
+                val users = getAllUsersUseCase.execute("20")
+                Log.d("negr", users.user.toString())
+            }catch (e: UnknownHostException){
+                e.printStackTrace()
+            }
         }
     }
 }
