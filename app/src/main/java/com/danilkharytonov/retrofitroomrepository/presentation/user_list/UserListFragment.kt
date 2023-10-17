@@ -1,7 +1,6 @@
 package com.danilkharytonov.retrofitroomrepository.presentation.user_list
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,7 +37,6 @@ class UserListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val layoutManager = LinearLayoutManager(requireContext())
         val adapter = UserListAdapter { user ->
-            Log.d("uuid", user.login.uuid)
             findNavController().navigate(
                 R.id.action_userListFragment_to_userDetailFragment,
                 bundleOf(USER_ID to user.login.uuid)

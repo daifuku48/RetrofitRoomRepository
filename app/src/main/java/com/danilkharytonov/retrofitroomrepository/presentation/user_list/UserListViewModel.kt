@@ -107,38 +107,6 @@ class UserListViewModel @Inject constructor(
         }
     }
 
-//    private suspend fun saveUsers(){
-//        withContext(Dispatchers.IO){
-//            userList.value.forEach { user ->
-//                val cw = ContextWrapper(context)
-//                val directory = cw.getDir(IMAGE_DIRECTORY_PATH, Context.MODE_APPEND)
-//                val safeFileName = "image_${user.login.uuid.replace("-", "")}.jpg"
-//                val myPath = File(directory, safeFileName)
-//                Log.d("id", safeFileName)
-//                var fos: FileOutputStream? = null
-//                try {
-//                    fos = FileOutputStream(myPath)
-//                    val bitmapImage = Glide.with(context)
-//                        .asBitmap()
-//                        .load(user.picture.iconImage)
-//                        .submit().get()
-//                    bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos)
-//                    user.picture.iconImage = safeFileName
-//                } catch (e: java.lang.Exception) {
-//                    e.printStackTrace()
-//                } finally {
-//                    try {
-//                        fos!!.close()
-//                    } catch (e: IOException) {
-//                        e.printStackTrace()
-//                    }
-//                }
-//            }
-//            insertUserToDBUseCase.execute(userList.value)
-//            Log.d("users", "users saved")
-//        }
-//    }
-
     private suspend fun addUsers() {
         val users = getAllUsersFromApiUseCase.execute(20)
         _userList.value = users
