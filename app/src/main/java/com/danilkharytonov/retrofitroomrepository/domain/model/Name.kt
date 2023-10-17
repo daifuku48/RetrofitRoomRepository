@@ -1,7 +1,7 @@
 package com.danilkharytonov.retrofitroomrepository.domain.model
 
 data class Name(
-    val first: String,
-    val last: String,
+    val firstName: String,
+    val lastName: String,
     val title: String
 )

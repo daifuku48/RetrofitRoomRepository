@@ -39,7 +39,7 @@ class UserListAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(user: User, onClick: (User) -> Unit) {
-            binding.nameUserList.text = "${user.name.first} ${user.name.last}"
+            binding.nameUserList.text = "${user.name.firstName} ${user.name.lastName}"
             binding.root.setOnClickListener {
                 onClick(user)
             }

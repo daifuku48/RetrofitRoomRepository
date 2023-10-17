@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">RetrofitRoomRepository</string>
     <string name="name">Name</string>
-    <string name="full_name">%s %s</string>
+    <string name="full_name">Full Name: %s %s %s</string>
+    <string name="gender">Gender: %s</string>
+    <string name="email">Email: %s</string>
+    <string name="back">Back</string>
 </resources>

@@ -18,15 +18,15 @@ fun UsersNetwork.mapToDomain(): Users {
             email = userNetwork.email,
             gender = userNetwork.gender,
             name = Name(
-                first = userNetwork.name.first,
-                last = userNetwork.name.last,
+                firstName = userNetwork.name.firstName,
+                lastName = userNetwork.name.lastName,
                 title = userNetwork.name.title
             ),
             login = Login(
                 uuid = userNetwork.login.uuid
             ),
             picture = Picture(
-                thumbnail = userNetwork.picture.thumbnail
+                iconImage = userNetwork.picture.iconImage
             )
         )
     }

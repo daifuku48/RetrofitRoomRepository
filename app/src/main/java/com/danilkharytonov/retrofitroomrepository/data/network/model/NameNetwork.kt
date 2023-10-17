@@ -4,9 +4,9 @@ import com.google.gson.annotations.SerializedName
 
 data class NameNetwork(
     @SerializedName("first")
-    val first: String,
+    val firstName: String,
     @SerializedName("last")
-    val last: String,
+    val lastName: String,
     @SerializedName("title")
     val title: String
 )

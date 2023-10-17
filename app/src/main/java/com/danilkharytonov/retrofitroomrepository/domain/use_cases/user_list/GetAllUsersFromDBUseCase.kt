@@ -4,10 +4,11 @@ import com.danilkharytonov.retrofitroomrepository.domain.model.User
 import com.danilkharytonov.retrofitroomrepository.domain.repository.UserRepository
 import javax.inject.Inject
 
-class GetAllUsersUseCase @Inject constructor(
+class GetAllUsersFromDBUseCase @Inject constructor(
     private val repository: UserRepository
 ) {
-    suspend fun execute(results: Int): List<User> {
-        return repository.getAllUsers(results)
+    suspend fun execute(): List<User> {
+        return repository.getAllUsersFromDB()
     }
+
 }

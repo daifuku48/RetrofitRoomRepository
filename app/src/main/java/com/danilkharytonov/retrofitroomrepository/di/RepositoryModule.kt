@@ -1,5 +1,6 @@
 package com.danilkharytonov.retrofitroomrepository.di
 
+import com.danilkharytonov.retrofitroomrepository.data.database.UserDao
 import com.danilkharytonov.retrofitroomrepository.data.network.UserRetrofitInstance
 import com.danilkharytonov.retrofitroomrepository.data.repository.UserRepositoryImpl
 import com.danilkharytonov.retrofitroomrepository.domain.repository.UserRepository
@@ -17,9 +18,11 @@ object RepositoryModule {
     @Singleton
     fun providesUserRepository(
         userRetrofitInstance: UserRetrofitInstance,
+        userDao: UserDao
     ): UserRepository {
         return UserRepositoryImpl(
             userRetrofitInstance = userRetrofitInstance,
+            userDao = userDao
         )
     }
 
