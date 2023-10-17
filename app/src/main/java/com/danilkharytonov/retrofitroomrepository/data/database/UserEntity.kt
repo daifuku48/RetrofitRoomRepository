@@ -18,32 +18,13 @@ data class UserEntity(
     val gender: String,
     @ColumnInfo("icon_image")
     val imageIcon: String,
-    @ColumnInfo("image_bytes")
-    val imageBytes: ByteArray,
     @ColumnInfo("first_name")
     val firstName: String,
     @ColumnInfo("last_name")
     val lastName: String,
     @ColumnInfo("title")
     val title: String
-) {
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-        other as UserEntity
-        if (uuid != other.uuid) return false
-        if (email != other.email) return false
-        if (!imageBytes.contentEquals(other.imageBytes)) return false
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = uuid.hashCode()
-        result = 31 * result + email.hashCode()
-        result = 31 * result + imageBytes.contentHashCode()
-        return result
-    }
-}
+)
 
 fun UserEntity.toDomain(): User {
     return User(
@@ -55,7 +36,6 @@ fun UserEntity.toDomain(): User {
             firstName = firstName,
             lastName = lastName,
             title = title
-        ),
-        byteArray = imageBytes
+        )
     )
 }

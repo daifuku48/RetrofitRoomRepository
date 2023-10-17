@@ -1,14 +1,13 @@
 package com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_list
 
-import android.graphics.Bitmap
 import com.danilkharytonov.retrofitroomrepository.domain.model.User
 import com.danilkharytonov.retrofitroomrepository.domain.repository.UserRepository
 import javax.inject.Inject
 
-class InsertUserToDBUseCase @Inject constructor(
+class InsertUsersToDBUseCase @Inject constructor(
     private val repository: UserRepository
 ) {
-    suspend fun execute(user: User, bitmap: Bitmap) {
-        repository.insertUserToDB(user, bitmap)
+    suspend fun execute(userList: List<User>) {
+        repository.insertUsersToDB(userList)
     }
 }

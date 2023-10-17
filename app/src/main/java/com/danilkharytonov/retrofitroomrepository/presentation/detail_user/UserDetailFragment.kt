@@ -1,7 +1,5 @@
 package com.danilkharytonov.retrofitroomrepository.presentation.detail_user
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -59,15 +57,8 @@ class UserDetailFragment : Fragment() {
                         user.name.firstName,
                         user.name.lastName
                     )
-                    if (user.byteArray != null) {
-                        val bitmap: Bitmap? =
-                            BitmapFactory.decodeByteArray(user.byteArray, 0, user.byteArray!!.size)
-                        if (bitmap != null) {
-                            binding.userIcon.setImageBitmap(bitmap)
-                        } else {
-                            binding.userIcon.setImageResource(R.drawable.default_icon)
-                        }
-                    }
+                    if (user.picture.iconImage != "")
+                        viewModel.loadImageFromStorage(binding.userIcon)
                 }
             }
         }

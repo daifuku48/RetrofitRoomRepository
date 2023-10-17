@@ -2,10 +2,10 @@ package com.danilkharytonov.retrofitroomrepository.di
 
 import com.danilkharytonov.retrofitroomrepository.domain.repository.UserRepository
 import com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_detail.GetUserByIdFromDB
-import com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_list.DeleteUserFromDBUseCase
+import com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_list.DeleteUsersFromDBUseCase
 import com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_list.GetAllUsersFromApiUseCase
 import com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_list.GetAllUsersFromDBUseCase
-import com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_list.InsertUserToDBUseCase
+import com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_list.InsertUsersToDBUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -51,8 +51,8 @@ object DomainModule {
     @Singleton
     fun providesDeleteUsersFromDBUseCase(
         repository: UserRepository
-    ): DeleteUserFromDBUseCase {
-        return DeleteUserFromDBUseCase(
+    ): DeleteUsersFromDBUseCase {
+        return DeleteUsersFromDBUseCase(
             repository = repository
         )
     }
@@ -61,8 +61,8 @@ object DomainModule {
     @Singleton
     fun providesInsertUserToDBUseCase(
         repository: UserRepository
-    ): InsertUserToDBUseCase {
-        return InsertUserToDBUseCase(
+    ): InsertUsersToDBUseCase {
+        return InsertUsersToDBUseCase(
             repository = repository
         )
     }

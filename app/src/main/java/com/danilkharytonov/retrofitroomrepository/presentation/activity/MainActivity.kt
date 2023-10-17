@@ -15,5 +15,6 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         const val USER_ID = "USER_ID"
+        const val IMAGE_DIRECTORY_PATH = "userIconImages"
     }
 }
