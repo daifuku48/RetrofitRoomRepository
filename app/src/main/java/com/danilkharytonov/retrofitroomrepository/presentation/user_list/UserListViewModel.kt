@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.net.UnknownHostException
 import javax.inject.Inject
 
 
@@ -36,24 +37,37 @@ class UserListViewModel @Inject constructor(
     private fun fetchUsers() {
         viewModelScope.launch {
             try {
-                val users = getAllUsersFromApiUseCase.execute(20)
-                _userList.emit(users)
-                val dbUsers = getAllUsersFromDBUseCase.execute()
-                dbUsers.map { user ->
-                    val bitmap = Glide.with(context)
-                        .asBitmap()
-                        .load(user.picture.iconImage)
-                        .submit()
-                        .get()
-                    deleteUserFromDBUseCase.execute(user, bitmap)
-                }
-                saveUsers(users)
-            } catch (e: Exception) {
-                e.printStackTrace()
-                val users = getAllUsersFromDBUseCase.execute()
-                _userList.emit(users)
+                addUsers()
+                deleteOldUsers()
+                saveUsers(userList.value)
+            } catch (e: UnknownHostException) {
+                getUsersFromDB()
             }
         }
+    }
+
+    private suspend fun deleteOldUsers() {
+        withContext(Dispatchers.IO){
+            val dbUsers = getAllUsersFromDBUseCase.execute()
+            dbUsers.map { user ->
+                val bitmap = Glide.with(context)
+                    .asBitmap()
+                    .load(user.picture.iconImage)
+                    .submit()
+                    .get()
+                deleteUserFromDBUseCase.execute(user, bitmap)
+            }
+        }
+    }
+
+    private suspend fun addUsers() {
+        val users = getAllUsersFromApiUseCase.execute(20)
+        _userList.emit(users)
+    }
+
+    private suspend fun getUsersFromDB() {
+        val users = getAllUsersFromDBUseCase.execute()
+        _userList.emit(users)
     }
 
     private suspend fun saveUsers(userList: List<User>) {
