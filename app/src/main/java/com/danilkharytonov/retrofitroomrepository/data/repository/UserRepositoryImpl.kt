@@ -11,11 +11,9 @@ import com.danilkharytonov.retrofitroomrepository.domain.model.toEntity
 import com.danilkharytonov.retrofitroomrepository.domain.repository.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
-import java.io.IOException
 import java.net.URL
 import javax.inject.Inject
 
@@ -52,7 +50,6 @@ class UserRepositoryImpl @Inject constructor(
         withContext(Dispatchers.IO) {
             try {
                 val dir = context.filesDir
-
                 val files = dir.listFiles()
                 files?.map { file ->
                     async {
@@ -69,7 +66,6 @@ class UserRepositoryImpl @Inject constructor(
                 }?.forEach {
                     it.await()
                 }
-
 
                 userList.map { user ->
                     async {
