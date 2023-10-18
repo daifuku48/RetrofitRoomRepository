@@ -1,6 +1,5 @@
 package com.danilkharytonov.retrofitroomrepository.presentation.user_list
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.danilkharytonov.retrofitroomrepository.domain.model.User
@@ -31,13 +30,26 @@ class UserListViewModel @Inject constructor(
     val userList = _userList.asStateFlow()
 
     init {
-        fetchUsers()
+        fetchUsersToEnd()
     }
 
-    private fun fetchUsers() {
+    fun fetchUsersToEnd() {
         viewModelScope.launch {
             try {
-                addUsers()
+                addUsersToEnd()
+                deleteUserFromDBUseCase.execute()
+                saveUsers()
+                saveUserImagesInStorageUseCase.execute(userList.value)
+            } catch (e: UnknownHostException) {
+                getUsersFromDB()
+            }
+        }
+    }
+
+    fun fetchUserToStart() {
+        viewModelScope.launch {
+            try {
+                addUsersToStart()
                 deleteUserFromDBUseCase.execute()
                 saveUsers()
                 saveUserImagesInStorageUseCase.execute(userList.value)
@@ -53,10 +65,14 @@ class UserListViewModel @Inject constructor(
         }
     }
 
-    private suspend fun addUsers() {
-        Log.d("users", "users")
+    private suspend fun addUsersToEnd() {
         val users = getAllUsersFromApiUseCase.execute(20)
-        _userList.value = users
+        _userList.value = _userList.value + users
+    }
+
+    private suspend fun addUsersToStart() {
+        val users = getAllUsersFromApiUseCase.execute(20)
+        _userList.value = users + _userList.value
     }
 
     private suspend fun getUsersFromDB() {
