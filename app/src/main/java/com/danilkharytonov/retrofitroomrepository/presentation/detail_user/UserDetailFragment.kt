@@ -57,10 +57,11 @@ class UserDetailFragment : Fragment() {
                         user.name.firstName,
                         user.name.lastName
                     )
-                    if (user.picture.iconImage != "")
-                        viewModel.loadImageFromStorage(binding.userIcon)
                 }
             }
+        }
+        viewModel.userImage.observe(viewLifecycleOwner) { image ->
+            binding.userIcon.setImageBitmap(image)
         }
     }
 

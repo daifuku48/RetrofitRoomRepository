@@ -1,5 +1,6 @@
 package com.danilkharytonov.retrofitroomrepository.di
 
+import android.app.Application
 import com.danilkharytonov.retrofitroomrepository.data.database.UserDao
 import com.danilkharytonov.retrofitroomrepository.data.network.UserRetrofitInstance
 import com.danilkharytonov.retrofitroomrepository.data.repository.UserRepositoryImpl
@@ -18,11 +19,13 @@ object RepositoryModule {
     @Singleton
     fun providesUserRepository(
         userRetrofitInstance: UserRetrofitInstance,
-        userDao: UserDao
+        userDao: UserDao,
+        context: Application
     ): UserRepository {
         return UserRepositoryImpl(
             userRetrofitInstance = userRetrofitInstance,
-            userDao = userDao
+            userDao = userDao,
+            context = context
         )
     }
 

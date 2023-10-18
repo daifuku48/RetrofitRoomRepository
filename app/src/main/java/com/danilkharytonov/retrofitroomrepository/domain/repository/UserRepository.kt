@@ -1,5 +1,6 @@
 package com.danilkharytonov.retrofitroomrepository.domain.repository
 
+import android.graphics.Bitmap
 import com.danilkharytonov.retrofitroomrepository.domain.model.User
 
 interface UserRepository {
@@ -12,4 +13,8 @@ interface UserRepository {
     suspend fun getAllUsersFromDB(): List<User>
 
     suspend fun getUserByIdFromDB(uuid: String): User
+
+    suspend fun saveUserImagesInStorage(userList: List<User>)
+
+    suspend fun loadImageFromStorage(uuid: String): Bitmap?
 }

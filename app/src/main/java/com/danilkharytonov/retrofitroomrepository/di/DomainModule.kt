@@ -1,11 +1,15 @@
 package com.danilkharytonov.retrofitroomrepository.di
 
+import com.bumptech.glide.annotation.GlideModule
+import com.bumptech.glide.module.AppGlideModule
 import com.danilkharytonov.retrofitroomrepository.domain.repository.UserRepository
 import com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_detail.GetUserByIdFromDB
 import com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_list.DeleteUsersFromDBUseCase
 import com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_list.GetAllUsersFromApiUseCase
 import com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_list.GetAllUsersFromDBUseCase
 import com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_list.InsertUsersToDBUseCase
+import com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_list.LoadImagesFromStorageUseCase
+import com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_list.SaveUserImagesInStorageUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -66,4 +70,27 @@ object DomainModule {
             repository = repository
         )
     }
+
+    @Provides
+    @Singleton
+    fun providesSaveUserImagesInStorageUseCase(
+        repository: UserRepository
+    ): SaveUserImagesInStorageUseCase {
+        return SaveUserImagesInStorageUseCase(
+            repository = repository
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun providesLoadImagesFromStorageUseCase(
+        repository: UserRepository
+    ): LoadImagesFromStorageUseCase {
+        return LoadImagesFromStorageUseCase(
+            repository = repository
+        )
+    }
 }
+
+@GlideModule
+class Module : AppGlideModule()
