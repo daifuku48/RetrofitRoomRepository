@@ -8,7 +8,6 @@ import com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_list.Del
 import com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_list.GetAllUsersFromApiUseCase
 import com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_list.GetAllUsersFromDBUseCase
 import com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_list.InsertUsersToDBUseCase
-import com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_list.LoadImagesFromStorageUseCase
 import com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_list.SaveUserImagesInStorageUseCase
 import dagger.Module
 import dagger.Provides
@@ -77,16 +76,6 @@ object DomainModule {
         repository: UserRepository
     ): SaveUserImagesInStorageUseCase {
         return SaveUserImagesInStorageUseCase(
-            repository = repository
-        )
-    }
-
-    @Provides
-    @Singleton
-    fun providesLoadImagesFromStorageUseCase(
-        repository: UserRepository
-    ): LoadImagesFromStorageUseCase {
-        return LoadImagesFromStorageUseCase(
             repository = repository
         )
     }

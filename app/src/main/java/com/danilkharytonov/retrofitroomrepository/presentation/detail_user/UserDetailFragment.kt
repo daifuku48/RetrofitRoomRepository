@@ -10,6 +10,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.danilkharytonov.retrofitroomrepository.R
 import com.danilkharytonov.retrofitroomrepository.databinding.FragmentDetailUserBinding
 import com.danilkharytonov.retrofitroomrepository.presentation.activity.MainActivity.Companion.USER_ID
@@ -57,11 +58,11 @@ class UserDetailFragment : Fragment() {
                         user.name.firstName,
                         user.name.lastName
                     )
+                    Glide.with(requireContext())
+                        .load(user.picture.iconImage)
+                        .into(binding.userIcon)
                 }
             }
-        }
-        viewModel.userImage.observe(viewLifecycleOwner) { image ->
-            binding.userIcon.setImageBitmap(image)
         }
     }
 
