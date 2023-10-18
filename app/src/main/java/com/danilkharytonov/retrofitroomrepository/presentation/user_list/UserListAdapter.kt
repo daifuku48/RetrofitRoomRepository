@@ -2,15 +2,15 @@ package com.danilkharytonov.retrofitroomrepository.presentation.user_list
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.danilkharytonov.retrofitroomrepository.databinding.UserItemBinding
 import com.danilkharytonov.retrofitroomrepository.domain.model.User
 
 class UserListAdapter(
     private val binder: (User) -> Unit
-) : ListAdapter<User, UserListAdapter.ViewHolder>(ItemCallback) {
+) : PagingDataAdapter<User, UserListAdapter.ViewHolder>(ItemCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -20,7 +20,9 @@ class UserListAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val user = getItem(position)
-        holder.bind(user, binder)
+        if (user != null) {
+            holder.bind(user, binder)
+        }
     }
 
     object ItemCallback : DiffUtil.ItemCallback<User>() {

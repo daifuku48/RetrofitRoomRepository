@@ -7,7 +7,7 @@ import retrofit2.http.Query
 interface UserRetrofitInstance {
 
     @GET("api/")
-    suspend fun getAllUsers(@Query("results") results: Int): UsersNetwork
+    suspend fun getAllUsers(@Query("results") results: Int, @Query("page") page: Int): UsersNetwork
 
     companion object {
         const val BASE_URL = "https://randomuser.me/"

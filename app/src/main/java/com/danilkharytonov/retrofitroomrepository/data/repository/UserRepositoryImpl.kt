@@ -22,8 +22,8 @@ class UserRepositoryImpl @Inject constructor(
     private val userDao: UserDao,
     private val context: Application
 ) : UserRepository {
-    override suspend fun getAllUsersFromApi(results: Int): List<User> {
-        return userRetrofitInstance.getAllUsers(results).mapToDomain().userList
+    override suspend fun getAllUsersFromApi(results: Int, page: Int): List<User> {
+        return userRetrofitInstance.getAllUsers(results, page).mapToDomain().userList
     }
 
     override suspend fun deleteUsersFromDB() {
@@ -46,27 +46,32 @@ class UserRepositoryImpl @Inject constructor(
         return userDao.getUserById(uuid).toDomain()
     }
 
+    override suspend fun deleteImageFiles() {
+        withContext(Dispatchers.IO) {
+            val dir = context.filesDir
+            val files = dir.listFiles()
+            files?.map { file ->
+                async {
+                    try {
+                        if (file.delete()) {
+                            Log.d("Deleted file", file.name)
+                        } else {
+                            Log.e("Failed to delete file", file.name)
+                        }
+                    } catch (e: Exception) {
+                        Log.e("Failed to delete file", file.name, e)
+                    }
+                }
+            }?.forEach {
+                it.await()
+            }
+        }
+    }
+
     override suspend fun saveUserImagesInStorage(userList: List<User>) {
         withContext(Dispatchers.IO) {
             try {
                 val dir = context.filesDir
-                val files = dir.listFiles()
-                files?.map { file ->
-                    async {
-                        try {
-                            if (file.delete()) {
-                                Log.d("Deleted file", file.name)
-                            } else {
-                                Log.e("Failed to delete file", file.name)
-                            }
-                        } catch (e: Exception) {
-                            Log.e("Failed to delete file", file.name, e)
-                        }
-                    }
-                }?.forEach {
-                    it.await()
-                }
-
                 userList.map { user ->
                     async {
                         try {

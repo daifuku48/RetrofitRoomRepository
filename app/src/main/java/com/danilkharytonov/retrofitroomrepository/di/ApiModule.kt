@@ -43,5 +43,4 @@ object ApiModule {
     fun providesUserRetrofitInstance(retrofit: Retrofit): UserRetrofitInstance {
         return retrofit.create(UserRetrofitInstance::class.java)
     }
-
 }

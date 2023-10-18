@@ -51,7 +51,7 @@ class UserListFragment : Fragment() {
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.userList.collect { userList ->
-                    adapter.submitList(userList)
+                    adapter.submitData(userList)
                 }
             }
         }

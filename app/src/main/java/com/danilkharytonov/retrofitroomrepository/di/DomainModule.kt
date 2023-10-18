@@ -4,6 +4,7 @@ import com.bumptech.glide.annotation.GlideModule
 import com.bumptech.glide.module.AppGlideModule
 import com.danilkharytonov.retrofitroomrepository.domain.repository.UserRepository
 import com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_detail.GetUserByIdFromDB
+import com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_list.DeleteImageFilesUseCase
 import com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_list.DeleteUsersFromDBUseCase
 import com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_list.GetAllUsersFromApiUseCase
 import com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_list.GetAllUsersFromDBUseCase
@@ -76,6 +77,16 @@ object DomainModule {
         repository: UserRepository
     ): SaveUserImagesInStorageUseCase {
         return SaveUserImagesInStorageUseCase(
+            repository = repository
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun providesDeleteImageFilesUseCase(
+        repository: UserRepository
+    ): DeleteImageFilesUseCase {
+        return DeleteImageFilesUseCase(
             repository = repository
         )
     }

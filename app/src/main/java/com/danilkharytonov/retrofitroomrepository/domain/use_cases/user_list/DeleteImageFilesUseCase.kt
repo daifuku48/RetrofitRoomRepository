@@ -1,13 +1,12 @@
 package com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_list
 
-import com.danilkharytonov.retrofitroomrepository.domain.model.User
 import com.danilkharytonov.retrofitroomrepository.domain.repository.UserRepository
 import javax.inject.Inject
 
-class GetAllUsersFromApiUseCase @Inject constructor(
+class DeleteImageFilesUseCase @Inject constructor(
     private val repository: UserRepository
 ) {
-    suspend fun execute(results: Int, page: Int): List<User> {
-        return repository.getAllUsersFromApi(results, page)
+    suspend fun execute() {
+        repository.deleteImageFiles()
     }
 }
