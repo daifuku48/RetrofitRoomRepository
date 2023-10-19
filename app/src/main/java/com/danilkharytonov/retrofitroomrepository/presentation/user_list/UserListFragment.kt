@@ -46,21 +46,9 @@ class UserListFragment : Fragment() {
         }, onListStart = {
             viewModel.fetchUserToStart()
         })
-
         initList(adapter)
         binding.userList.adapter = adapter
         binding.userList.layoutManager = layoutManager
-
-//        var isLoading = false
-//        binding.userList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-//            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-//                super.onScrollStateChanged(recyclerView, newState)
-//                if (newState == RecyclerView.SCROLL_STATE_IDLE && !recyclerView.canScrollVertically(1) && !isLoading) {
-//                    isLoading = true
-//                    //request next page
-//                }
-//            }
-//        })
     }
 
     private fun initList(adapter: UserListAdapter) {

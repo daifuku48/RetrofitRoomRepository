@@ -2,9 +2,7 @@ package com.danilkharytonov.retrofitroomrepository.domain.repository
 
 import com.danilkharytonov.retrofitroomrepository.domain.model.User
 
-interface UserRepository {
-    suspend fun getAllUsersFromApi(results: Int): List<User>
-
+interface UserDBRepository {
     suspend fun deleteUsersFromDB()
 
     suspend fun insertUsersToDB(userList: List<User>)
@@ -12,6 +10,4 @@ interface UserRepository {
     suspend fun getAllUsersFromDB(): List<User>
 
     suspend fun getUserByIdFromDB(uuid: String): User
-
-    suspend fun saveUserImagesInStorage(userList: List<User>)
 }

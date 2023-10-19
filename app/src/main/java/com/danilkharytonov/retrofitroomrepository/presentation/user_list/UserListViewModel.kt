@@ -3,28 +3,17 @@ package com.danilkharytonov.retrofitroomrepository.presentation.user_list
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.danilkharytonov.retrofitroomrepository.domain.model.User
-import com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_list.DeleteUsersFromDBUseCase
 import com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_list.GetAllUsersFromApiUseCase
-import com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_list.GetAllUsersFromDBUseCase
-import com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_list.InsertUsersToDBUseCase
-import com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_list.SaveUserImagesInStorageUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.net.UnknownHostException
 import javax.inject.Inject
 
 
 @HiltViewModel
 class UserListViewModel @Inject constructor(
     private val getAllUsersFromApiUseCase: GetAllUsersFromApiUseCase,
-    private val deleteUserFromDBUseCase: DeleteUsersFromDBUseCase,
-    private val getAllUsersFromDBUseCase: GetAllUsersFromDBUseCase,
-    private val insertUserToDBUseCase: InsertUsersToDBUseCase,
-    private val saveUserImagesInStorageUseCase: SaveUserImagesInStorageUseCase,
 ) : ViewModel() {
     private val _userList = MutableStateFlow<List<User>>(emptyList())
     val userList = _userList.asStateFlow()
@@ -35,33 +24,13 @@ class UserListViewModel @Inject constructor(
 
     fun fetchUsersToEnd() {
         viewModelScope.launch {
-            try {
-                addUsersToEnd()
-                deleteUserFromDBUseCase.execute()
-                saveUsers()
-                saveUserImagesInStorageUseCase.execute(userList.value)
-            } catch (e: UnknownHostException) {
-                getUsersFromDB()
-            }
+            addUsersToEnd()
         }
     }
 
     fun fetchUserToStart() {
         viewModelScope.launch {
-            try {
-                addUsersToStart()
-                deleteUserFromDBUseCase.execute()
-                saveUsers()
-                saveUserImagesInStorageUseCase.execute(userList.value)
-            } catch (e: UnknownHostException) {
-                getUsersFromDB()
-            }
-        }
-    }
-
-    private suspend fun saveUsers() {
-        withContext(Dispatchers.IO) {
-            insertUserToDBUseCase.execute(userList.value)
+            addUsersToStart()
         }
     }
 
@@ -73,10 +42,5 @@ class UserListViewModel @Inject constructor(
     private suspend fun addUsersToStart() {
         val users = getAllUsersFromApiUseCase.execute(20)
         _userList.value = users + _userList.value
-    }
-
-    private suspend fun getUsersFromDB() {
-        val users = getAllUsersFromDBUseCase.execute()
-        _userList.value = users
     }
 }

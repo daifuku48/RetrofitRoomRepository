@@ -47,7 +47,6 @@ class UserListAdapter(
     class ViewHolder(
         private val binding: UserItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-
         fun bind(user: User, onClick: (User) -> Unit) {
             binding.nameUserList.text = "${user.name.firstName} ${user.name.lastName}"
             binding.root.setOnClickListener {

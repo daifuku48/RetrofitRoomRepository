@@ -1,13 +1,26 @@
 package com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_list
 
 import com.danilkharytonov.retrofitroomrepository.domain.model.User
-import com.danilkharytonov.retrofitroomrepository.domain.repository.UserRepository
+import com.danilkharytonov.retrofitroomrepository.domain.repository.UserApiRepository
+import com.danilkharytonov.retrofitroomrepository.domain.repository.UserDBRepository
+import com.danilkharytonov.retrofitroomrepository.domain.repository.UserStorageRepository
+import java.net.UnknownHostException
 import javax.inject.Inject
 
 class GetAllUsersFromApiUseCase @Inject constructor(
-    private val repository: UserRepository
+    private val apiRepository: UserApiRepository,
+    private val dbRepository: UserDBRepository,
+    private val storageRepository: UserStorageRepository
 ) {
     suspend fun execute(results: Int): List<User> {
-        return repository.getAllUsersFromApi(results)
+        return try {
+            val users = apiRepository.getAllUsersFromApi(results)
+            dbRepository.deleteUsersFromDB()
+            dbRepository.insertUsersToDB(users)
+            storageRepository.saveUserImagesInStorage(users)
+            users
+        } catch (e: UnknownHostException) {
+            dbRepository.getAllUsersFromDB()
+        }
     }
 }

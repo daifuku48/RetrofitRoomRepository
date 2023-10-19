@@ -1,14 +1,10 @@
 package com.danilkharytonov.retrofitroomrepository.di
 
-import com.bumptech.glide.annotation.GlideModule
-import com.bumptech.glide.module.AppGlideModule
-import com.danilkharytonov.retrofitroomrepository.domain.repository.UserRepository
+import com.danilkharytonov.retrofitroomrepository.domain.repository.UserApiRepository
+import com.danilkharytonov.retrofitroomrepository.domain.repository.UserDBRepository
+import com.danilkharytonov.retrofitroomrepository.domain.repository.UserStorageRepository
 import com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_detail.GetUserByIdFromDB
-import com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_list.DeleteUsersFromDBUseCase
 import com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_list.GetAllUsersFromApiUseCase
-import com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_list.GetAllUsersFromDBUseCase
-import com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_list.InsertUsersToDBUseCase
-import com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_list.SaveUserImagesInStorageUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,63 +19,25 @@ object DomainModule {
     @Provides
     @Singleton
     fun providesGetAllUsersFromApiUseCase(
-        repository: UserRepository
+        apiRepository: UserApiRepository,
+        dbRepository: UserDBRepository,
+        storageRepository: UserStorageRepository
     ): GetAllUsersFromApiUseCase {
         return GetAllUsersFromApiUseCase(
-            repository = repository
+            apiRepository = apiRepository,
+            dbRepository = dbRepository,
+            storageRepository = storageRepository
         )
     }
 
-    @Provides
-    @Singleton
-    fun providesGetAllUsersFromDB(
-        repository: UserRepository
-    ): GetAllUsersFromDBUseCase {
-        return GetAllUsersFromDBUseCase(
-            repository = repository
-        )
-    }
 
     @Provides
     @Singleton
     fun providesGetUserByIdFromDBUseCase(
-        repository: UserRepository
+        repository: UserDBRepository
     ): GetUserByIdFromDB {
         return GetUserByIdFromDB(
             repository = repository
         )
     }
-
-    @Provides
-    @Singleton
-    fun providesDeleteUsersFromDBUseCase(
-        repository: UserRepository
-    ): DeleteUsersFromDBUseCase {
-        return DeleteUsersFromDBUseCase(
-            repository = repository
-        )
-    }
-
-    @Provides
-    @Singleton
-    fun providesInsertUserToDBUseCase(
-        repository: UserRepository
-    ): InsertUsersToDBUseCase {
-        return InsertUsersToDBUseCase(
-            repository = repository
-        )
-    }
-
-    @Provides
-    @Singleton
-    fun providesSaveUserImagesInStorageUseCase(
-        repository: UserRepository
-    ): SaveUserImagesInStorageUseCase {
-        return SaveUserImagesInStorageUseCase(
-            repository = repository
-        )
-    }
 }
-
-@GlideModule
-class Module : AppGlideModule()
