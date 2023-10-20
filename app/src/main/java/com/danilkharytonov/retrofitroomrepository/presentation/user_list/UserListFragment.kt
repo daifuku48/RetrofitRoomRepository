@@ -15,24 +15,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.danilkharytonov.retrofitroomrepository.R
 import com.danilkharytonov.retrofitroomrepository.databinding.FragmentUserListBinding
 import com.danilkharytonov.retrofitroomrepository.presentation.activity.MainActivity.Companion.USER_ID
+import com.danilkharytonov.retrofitroomrepository.presentation.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class UserListFragment : Fragment() {
-    private var _binding: FragmentUserListBinding? = null
-    private val binding
-        get() = _binding!!
-
-    private val viewModel: UserListViewModel by viewModels()
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentUserListBinding.inflate(inflater)
-        return _binding?.root
-    }
-
+class UserListFragment : BaseFragment<FragmentUserListBinding, UserListViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val layoutManager = LinearLayoutManager(requireContext())
@@ -59,10 +47,5 @@ class UserListFragment : Fragment() {
                 }
             }
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

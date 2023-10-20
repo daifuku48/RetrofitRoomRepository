@@ -14,26 +14,12 @@ import com.bumptech.glide.Glide
 import com.danilkharytonov.retrofitroomrepository.R
 import com.danilkharytonov.retrofitroomrepository.databinding.FragmentDetailUserBinding
 import com.danilkharytonov.retrofitroomrepository.presentation.activity.MainActivity.Companion.USER_ID
+import com.danilkharytonov.retrofitroomrepository.presentation.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class UserDetailFragment : Fragment() {
-    private var _binding: FragmentDetailUserBinding? = null
-    private val binding
-        get() = _binding!!
-
-    private val viewModel: UserDetailViewModel by viewModels()
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentDetailUserBinding.inflate(inflater)
-        return _binding?.root
-    }
-
+class UserDetailFragment : BaseFragment<FragmentDetailUserBinding, UserDetailViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val userId = arguments?.getString(USER_ID)
@@ -64,10 +50,5 @@ class UserDetailFragment : Fragment() {
                 }
             }
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }
