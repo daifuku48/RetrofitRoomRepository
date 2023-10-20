@@ -12,11 +12,15 @@ class GetAllUsersFromApiUseCase @Inject constructor(
     private val dbRepository: UserDBRepository,
     private val storageRepository: UserStorageRepository
 ) {
+    private var isFirstTime = true
     suspend fun execute(results: Int): List<User> {
         return try {
             val users = apiRepository.getAllUsersFromApi(results)
-            dbRepository.deleteUsersFromDB()
             dbRepository.insertUsersToDB(users)
+            if (!isFirstTime) {
+                dbRepository.deleteUsersFromDB()
+                isFirstTime = false
+            }
             storageRepository.saveUserImagesInStorage(users)
             users
         } catch (e: UnknownHostException) {
