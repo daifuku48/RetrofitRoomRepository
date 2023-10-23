@@ -12,7 +12,10 @@ import java.lang.reflect.ParameterizedType
 import kotlin.reflect.KClass
 
 
-abstract class BaseFragmentVBVM<VB : ViewBinding, VM : ViewModel> : BaseFragmentVB<VB>() {
+abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>() : Fragment() {
+    private var _binding: VB? = null
+    protected val binding
+        get() = requireNotNull(_binding) { "need init binding after onCreateView and before onViewCreated" }
 
     protected val viewModel: VM by createViewModelLazy(
         viewModelClass = getViewModelClass(),
@@ -24,12 +27,6 @@ abstract class BaseFragmentVBVM<VB : ViewBinding, VM : ViewModel> : BaseFragment
             .actualTypeArguments[1] as Class<VM>
         return viewModelClass.kotlin
     }
-}
-
-abstract class BaseFragmentVB<VB : ViewBinding> : Fragment() {
-    private var _binding: VB? = null
-    protected val binding
-        get() = requireNotNull(_binding) { "need init binding after onCreateView and before onViewCreated" }
 
     override fun onCreateView(
         inflater: LayoutInflater,

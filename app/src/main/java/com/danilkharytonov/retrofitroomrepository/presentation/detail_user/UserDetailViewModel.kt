@@ -33,19 +33,6 @@ class UserDetailViewModel @AssistedInject constructor(
     )
     val user = _user.asStateFlow()
 
-    companion object {
-        fun providesUserDetailViewModelFactory(
-            factory: UserIdFactory,
-            userUuid: String
-        ): ViewModelProvider.Factory {
-            return object : ViewModelProvider.Factory {
-                override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                    return factory.create(userUuid) as T
-                }
-            }
-        }
-    }
-
     init {
         getUserById(uuid)
     }
@@ -59,5 +46,18 @@ class UserDetailViewModel @AssistedInject constructor(
     @AssistedFactory
     interface UserIdFactory {
         fun create(@Assisted uuid: String): UserDetailViewModel
+    }
+
+    companion object {
+        fun providesUserDetailViewModelFactory(
+            factory: UserIdFactory,
+            userUuid: String
+        ): ViewModelProvider.Factory {
+            return object : ViewModelProvider.Factory {
+                override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                    return factory.create(userUuid) as T
+                }
+            }
+        }
     }
 }

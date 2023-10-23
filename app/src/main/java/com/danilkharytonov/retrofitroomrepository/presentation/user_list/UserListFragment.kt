@@ -11,12 +11,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.danilkharytonov.retrofitroomrepository.R
 import com.danilkharytonov.retrofitroomrepository.databinding.FragmentUserListBinding
 import com.danilkharytonov.retrofitroomrepository.presentation.activity.MainActivity.Companion.USER_ID
-import com.danilkharytonov.retrofitroomrepository.presentation.base.BaseFragmentVBVM
+import com.danilkharytonov.retrofitroomrepository.presentation.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class UserListFragment : BaseFragmentVBVM<FragmentUserListBinding, UserListViewModel>() {
+class UserListFragment : BaseFragment<FragmentUserListBinding, UserListViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
