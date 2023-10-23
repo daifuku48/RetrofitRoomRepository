@@ -4,7 +4,7 @@ import com.danilkharytonov.retrofitroomrepository.domain.repository.UserApiRepos
 import com.danilkharytonov.retrofitroomrepository.domain.repository.UserDBRepository
 import com.danilkharytonov.retrofitroomrepository.domain.repository.UserStorageRepository
 import com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_detail.GetUserByIdFromDB
-import com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_list.GetAllUsersFromApiUseCase
+import com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_list.GetUsersUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,8 +22,8 @@ object DomainModule {
         apiRepository: UserApiRepository,
         dbRepository: UserDBRepository,
         storageRepository: UserStorageRepository
-    ): GetAllUsersFromApiUseCase {
-        return GetAllUsersFromApiUseCase(
+    ): GetUsersUseCase {
+        return GetUsersUseCase(
             apiRepository = apiRepository,
             dbRepository = dbRepository,
             storageRepository = storageRepository
