@@ -11,14 +11,8 @@ import androidx.viewbinding.ViewBinding
 import java.lang.reflect.ParameterizedType
 import kotlin.reflect.KClass
 
-<<<<<<< HEAD
+
 abstract class BaseFragmentVBVM<VB : ViewBinding, VM : ViewModel> : BaseFragmentVB<VB>() {
-=======
-abstract class BaseFragment<VB : ViewBinding, VM : ViewModel> : Fragment() {
-    private var _binding: VB? = null
-    protected val binding
-        get() = requireNotNull(_binding) { "Binding can be accessed after OnCreateView and before onViewCreated" }
->>>>>>> origin/master
 
     protected val viewModel: VM by createViewModelLazy(
         viewModelClass = getViewModelClass(),
@@ -30,15 +24,12 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel> : Fragment() {
             .actualTypeArguments[1] as Class<VM>
         return viewModelClass.kotlin
     }
-<<<<<<< HEAD
 }
 
 abstract class BaseFragmentVB<VB : ViewBinding> : Fragment() {
     private var _binding: VB? = null
     protected val binding
         get() = requireNotNull(_binding) { "need init binding after onCreateView and before onViewCreated" }
-=======
->>>>>>> origin/master
 
     override fun onCreateView(
         inflater: LayoutInflater,
