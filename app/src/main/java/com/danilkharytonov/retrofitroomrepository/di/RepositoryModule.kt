@@ -8,6 +8,7 @@ import com.danilkharytonov.retrofitroomrepository.data.repository.UserDBReposito
 import com.danilkharytonov.retrofitroomrepository.data.repository.UserStorageRepositoryImpl
 import com.danilkharytonov.retrofitroomrepository.domain.repository.UserApiRepository
 import com.danilkharytonov.retrofitroomrepository.domain.repository.UserDBRepository
+import com.danilkharytonov.retrofitroomrepository.domain.repository.UserStorageRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -42,7 +43,7 @@ object RepositoryModule {
     @Singleton
     fun providesUserStorageRepository(
         context: Application
-    ): UserStorageRepositoryImpl {
+    ): UserStorageRepository {
         return UserStorageRepositoryImpl(
             context = context
         )

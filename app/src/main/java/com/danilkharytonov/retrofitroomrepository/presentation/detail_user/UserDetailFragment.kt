@@ -1,10 +1,7 @@
 package com.danilkharytonov.retrofitroomrepository.presentation.detail_user
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -14,32 +11,25 @@ import com.bumptech.glide.Glide
 import com.danilkharytonov.retrofitroomrepository.R
 import com.danilkharytonov.retrofitroomrepository.databinding.FragmentDetailUserBinding
 import com.danilkharytonov.retrofitroomrepository.presentation.activity.MainActivity.Companion.USER_ID
+import com.danilkharytonov.retrofitroomrepository.presentation.base.BaseFragmentVB
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class UserDetailFragment : Fragment() {
-    private var _binding: FragmentDetailUserBinding? = null
-    private val binding
-        get() = _binding!!
+class UserDetailFragment : BaseFragmentVB<FragmentDetailUserBinding>() {
 
-    private val viewModel: UserDetailViewModel by viewModels()
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentDetailUserBinding.inflate(inflater)
-        return _binding?.root
+    @Inject
+    lateinit var factory: UserDetailViewModel.UserIdFactory
+    private val viewModel: UserDetailViewModel by viewModels {
+        val userId = arguments?.getString(USER_ID)
+        if (userId != null) {
+            UserDetailViewModel.providesUserDetailViewModelFactory(factory, userId)
+        } else UserDetailViewModel.providesUserDetailViewModelFactory(factory, "0")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val userId = arguments?.getString(USER_ID)
-        if (userId != null) {
-            viewModel.getUserById(userId)
-        }
         initUI()
         binding.backButton.setOnClickListener {
             findNavController().popBackStack()
@@ -64,10 +54,5 @@ class UserDetailFragment : Fragment() {
                 }
             }
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

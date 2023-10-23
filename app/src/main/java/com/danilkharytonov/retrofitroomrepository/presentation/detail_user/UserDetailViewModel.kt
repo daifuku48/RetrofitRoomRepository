@@ -1,23 +1,27 @@
 package com.danilkharytonov.retrofitroomrepository.presentation.detail_user
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.danilkharytonov.retrofitroomrepository.domain.model.Login
 import com.danilkharytonov.retrofitroomrepository.domain.model.Name
 import com.danilkharytonov.retrofitroomrepository.domain.model.Picture
 import com.danilkharytonov.retrofitroomrepository.domain.model.User
 import com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_detail.GetUserByIdFromDB
-import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 
-@HiltViewModel
-class UserDetailViewModel @Inject constructor(
+class UserDetailViewModel @AssistedInject constructor(
+    @Assisted
+    private val uuid: String,
     private val getUserByIdFromDB: GetUserByIdFromDB,
 ) : ViewModel() {
+
     private val _user = MutableStateFlow(
         User(
             email = "",
@@ -29,9 +33,31 @@ class UserDetailViewModel @Inject constructor(
     )
     val user = _user.asStateFlow()
 
-    fun getUserById(uuid: String) {
+    companion object {
+        fun providesUserDetailViewModelFactory(
+            factory: UserIdFactory,
+            userUuid: String
+        ): ViewModelProvider.Factory {
+            return object : ViewModelProvider.Factory {
+                override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                    return factory.create(userUuid) as T
+                }
+            }
+        }
+    }
+
+    init {
+        getUserById(uuid)
+    }
+
+    private fun getUserById(uuid: String) {
         viewModelScope.launch {
             _user.value = getUserByIdFromDB.execute(uuid = uuid)
         }
+    }
+
+    @AssistedFactory
+    interface UserIdFactory {
+        fun create(@Assisted uuid: String): UserDetailViewModel
     }
 }

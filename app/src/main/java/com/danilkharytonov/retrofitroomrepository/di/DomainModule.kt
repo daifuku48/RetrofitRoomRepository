@@ -30,7 +30,6 @@ object DomainModule {
         )
     }
 
-
     @Provides
     @Singleton
     fun providesGetUserByIdFromDBUseCase(
