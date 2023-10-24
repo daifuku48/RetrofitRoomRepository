@@ -1,46 +1,33 @@
 package com.danilkharytonov.retrofitroomrepository.di
 
 import com.danilkharytonov.retrofitroomrepository.data.network.UserRetrofitInstance
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import javax.inject.Singleton
 
-@Module
-@InstallIn(SingletonComponent::class)
-object ApiModule {
 
-    @Provides
-    @Singleton
-    fun providesHttpLoggingInterceptor(): HttpLoggingInterceptor {
-        return HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+val apiModule = module {
+    single<HttpLoggingInterceptor> {
+        HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
     }
 
-    @Provides
-    @Singleton
-    fun providesOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
-        return OkHttpClient.Builder()
-            .addInterceptor(httpLoggingInterceptor)
+    single<OkHttpClient> {
+        OkHttpClient.Builder()
+            .addInterceptor(get<HttpLoggingInterceptor>())
             .build()
     }
 
-    @Provides
-    @Singleton
-    fun providesRetrofit(okHttpClient: OkHttpClient): Retrofit {
-        return Retrofit.Builder()
+    single<Retrofit> {
+        Retrofit.Builder()
             .baseUrl(UserRetrofitInstance.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
-            .client(okHttpClient)
+            .client(get<OkHttpClient>())
             .build()
     }
 
-    @Provides
-    fun providesUserRetrofitInstance(retrofit: Retrofit): UserRetrofitInstance {
-        return retrofit.create(UserRetrofitInstance::class.java)
+    single<UserRetrofitInstance> {
+        get<Retrofit>().create(UserRetrofitInstance::class.java)
     }
 }

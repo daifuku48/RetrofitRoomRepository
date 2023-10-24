@@ -12,11 +12,13 @@ import com.danilkharytonov.retrofitroomrepository.R
 import com.danilkharytonov.retrofitroomrepository.databinding.FragmentUserListBinding
 import com.danilkharytonov.retrofitroomrepository.presentation.activity.MainActivity.Companion.USER_ID
 import com.danilkharytonov.retrofitroomrepository.presentation.base.BaseFragment
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-@AndroidEntryPoint
-class UserListFragment : BaseFragment<FragmentUserListBinding, UserListViewModel>() {
+
+class UserListFragment : BaseFragment<FragmentUserListBinding>() {
+
+    private val viewModel by viewModel<UserListViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

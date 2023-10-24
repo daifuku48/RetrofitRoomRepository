@@ -1,6 +1,5 @@
 package com.danilkharytonov.retrofitroomrepository.di
 
-import android.app.Application
 import com.danilkharytonov.retrofitroomrepository.data.database.UserDao
 import com.danilkharytonov.retrofitroomrepository.data.network.UserRetrofitInstance
 import com.danilkharytonov.retrofitroomrepository.data.repository.UserApiRepositoryImpl
@@ -9,43 +8,24 @@ import com.danilkharytonov.retrofitroomrepository.data.repository.UserStorageRep
 import com.danilkharytonov.retrofitroomrepository.domain.repository.UserApiRepository
 import com.danilkharytonov.retrofitroomrepository.domain.repository.UserDBRepository
 import com.danilkharytonov.retrofitroomrepository.domain.repository.UserStorageRepository
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
+import org.koin.dsl.module
 
-@Module
-@InstallIn(SingletonComponent::class)
-object RepositoryModule {
-
-    @Provides
-    @Singleton
-    fun providesUserDBRepository(
-        userDao: UserDao
-    ): UserDBRepository {
-        return UserDBRepositoryImpl(
-            userDao = userDao,
+val repositoryModule = module {
+    single<UserDBRepository> {
+        UserDBRepositoryImpl(
+            userDao = get<UserDao>()
         )
     }
 
-    @Provides
-    @Singleton
-    fun providesUserApiRepository(
-        retrofitInstance: UserRetrofitInstance
-    ): UserApiRepository {
-        return UserApiRepositoryImpl(
-            userRetrofitInstance = retrofitInstance
+    single<UserApiRepository> {
+        UserApiRepositoryImpl(
+            userRetrofitInstance = get<UserRetrofitInstance>()
         )
     }
 
-    @Provides
-    @Singleton
-    fun providesUserStorageRepository(
-        context: Application
-    ): UserStorageRepository {
-        return UserStorageRepositoryImpl(
-            context = context
+    single<UserStorageRepository> {
+        UserStorageRepositoryImpl(
+            context = get()
         )
     }
 }

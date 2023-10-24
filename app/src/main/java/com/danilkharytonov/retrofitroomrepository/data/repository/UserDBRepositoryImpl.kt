@@ -5,9 +5,8 @@ import com.danilkharytonov.retrofitroomrepository.data.database.toDomain
 import com.danilkharytonov.retrofitroomrepository.domain.model.User
 import com.danilkharytonov.retrofitroomrepository.domain.model.toEntity
 import com.danilkharytonov.retrofitroomrepository.domain.repository.UserDBRepository
-import javax.inject.Inject
 
-class UserDBRepositoryImpl @Inject constructor(
+class UserDBRepositoryImpl constructor(
     private val userDao: UserDao,
 ) : UserDBRepository {
     override suspend fun deleteUsersFromDB() {

@@ -5,28 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.createViewModelLazy
-import androidx.lifecycle.ViewModel
 import androidx.viewbinding.ViewBinding
 import java.lang.reflect.ParameterizedType
-import kotlin.reflect.KClass
 
 
-abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>() : Fragment() {
+abstract class BaseFragment<VB : ViewBinding> : Fragment() {
     private var _binding: VB? = null
     protected val binding
         get() = requireNotNull(_binding) { "need init binding after onCreateView and before onViewCreated" }
-
-    protected val viewModel: VM by createViewModelLazy(
-        viewModelClass = getViewModelClass(),
-        storeProducer = { this.viewModelStore }
-    )
-
-    private fun getViewModelClass(): KClass<VM> {
-        val viewModelClass = (javaClass.genericSuperclass as ParameterizedType)
-            .actualTypeArguments[1] as Class<VM>
-        return viewModelClass.kotlin
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

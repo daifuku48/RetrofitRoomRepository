@@ -1,11 +1,7 @@
 package com.danilkharytonov.retrofitroomrepository.presentation.detail_user
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -14,32 +10,20 @@ import com.bumptech.glide.Glide
 import com.danilkharytonov.retrofitroomrepository.R
 import com.danilkharytonov.retrofitroomrepository.databinding.FragmentDetailUserBinding
 import com.danilkharytonov.retrofitroomrepository.presentation.activity.MainActivity.Companion.USER_ID
-import dagger.hilt.android.AndroidEntryPoint
+import com.danilkharytonov.retrofitroomrepository.presentation.base.BaseFragment
 import kotlinx.coroutines.launch
-import javax.inject.Inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
-@AndroidEntryPoint
-class UserDetailFragment : Fragment() {
-    private var _binding: FragmentDetailUserBinding? = null
-    private val binding
-        get() = requireNotNull(_binding)
 
-    @Inject
-    lateinit var factory: UserDetailViewModel.UserIdFactory
-    private val viewModel: UserDetailViewModel by viewModels {
-        val userId = arguments?.getString(USER_ID)
-        if (userId != null) {
-            UserDetailViewModel.providesUserDetailViewModelFactory(factory, userId)
-        } else UserDetailViewModel.providesUserDetailViewModelFactory(factory, "0")
-    }
+class UserDetailFragment : BaseFragment<FragmentDetailUserBinding>() {
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentDetailUserBinding.inflate(inflater, container, false)
-        return _binding?.root
+    private val viewModel: UserDetailViewModel by viewModel {
+        parametersOf(
+            arguments?.getString(
+                USER_ID
+            ) ?: "0"
+        )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -68,10 +52,5 @@ class UserDetailFragment : Fragment() {
                 }
             }
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

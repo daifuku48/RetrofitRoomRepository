@@ -8,16 +8,12 @@ import com.danilkharytonov.retrofitroomrepository.domain.model.Name
 import com.danilkharytonov.retrofitroomrepository.domain.model.Picture
 import com.danilkharytonov.retrofitroomrepository.domain.model.User
 import com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_detail.GetUserByIdFromDB
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedFactory
-import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 
-class UserDetailViewModel @AssistedInject constructor(
-    @Assisted
+class UserDetailViewModel(
     private val uuid: String,
     private val getUserByIdFromDB: GetUserByIdFromDB,
 ) : ViewModel() {
@@ -43,9 +39,9 @@ class UserDetailViewModel @AssistedInject constructor(
         }
     }
 
-    @AssistedFactory
+
     interface UserIdFactory {
-        fun create(@Assisted uuid: String): UserDetailViewModel
+        fun create(uuid: String): UserDetailViewModel
     }
 
     companion object {

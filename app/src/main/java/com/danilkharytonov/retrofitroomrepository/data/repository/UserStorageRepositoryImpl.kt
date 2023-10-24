@@ -10,11 +10,10 @@ import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
 import java.net.URL
-import javax.inject.Inject
 
-class UserStorageRepositoryImpl @Inject constructor(
+class UserStorageRepositoryImpl constructor(
     private val context: Application
-): UserStorageRepository {
+) : UserStorageRepository {
     override suspend fun saveUserImagesInStorage(userList: List<User>) {
         withContext(Dispatchers.IO) {
             try {

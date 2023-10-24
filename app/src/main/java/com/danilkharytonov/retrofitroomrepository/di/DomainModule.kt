@@ -5,38 +5,21 @@ import com.danilkharytonov.retrofitroomrepository.domain.repository.UserDBReposi
 import com.danilkharytonov.retrofitroomrepository.domain.repository.UserStorageRepository
 import com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_detail.GetUserByIdFromDB
 import com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_list.GetUsersUseCase
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
+import org.koin.dsl.module
 
 
-@Module
-@InstallIn(SingletonComponent::class)
-object DomainModule {
-
-    @Provides
-    @Singleton
-    fun providesGetAllUsersFromApiUseCase(
-        apiRepository: UserApiRepository,
-        dbRepository: UserDBRepository,
-        storageRepository: UserStorageRepository
-    ): GetUsersUseCase {
-        return GetUsersUseCase(
-            apiRepository = apiRepository,
-            dbRepository = dbRepository,
-            storageRepository = storageRepository
+val domainModule = module {
+    single<GetUsersUseCase> {
+        GetUsersUseCase(
+            apiRepository = get<UserApiRepository>(),
+            dbRepository = get<UserDBRepository>(),
+            storageRepository = get<UserStorageRepository>()
         )
     }
 
-    @Provides
-    @Singleton
-    fun providesGetUserByIdFromDBUseCase(
-        repository: UserDBRepository
-    ): GetUserByIdFromDB {
-        return GetUserByIdFromDB(
-            repository = repository
+    single<GetUserByIdFromDB> {
+        GetUserByIdFromDB(
+            repository = get<UserDBRepository>()
         )
     }
 }

@@ -5,9 +5,8 @@ import com.danilkharytonov.retrofitroomrepository.domain.repository.UserApiRepos
 import com.danilkharytonov.retrofitroomrepository.domain.repository.UserDBRepository
 import com.danilkharytonov.retrofitroomrepository.domain.repository.UserStorageRepository
 import java.net.UnknownHostException
-import javax.inject.Inject
 
-class GetUsersUseCase @Inject constructor(
+class GetUsersUseCase constructor(
     private val apiRepository: UserApiRepository,
     private val dbRepository: UserDBRepository,
     private val storageRepository: UserStorageRepository
