@@ -1,7 +1,6 @@
 package com.danilkharytonov.retrofitroomrepository.di
 
 import androidx.room.Room
-import com.danilkharytonov.retrofitroomrepository.data.database.UserDao
 import com.danilkharytonov.retrofitroomrepository.data.database.UserDatabase
 import org.koin.dsl.module
 

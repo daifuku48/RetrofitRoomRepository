@@ -1,7 +1,5 @@
 package com.danilkharytonov.retrofitroomrepository.di
 
-import com.danilkharytonov.retrofitroomrepository.data.database.UserDao
-import com.danilkharytonov.retrofitroomrepository.data.network.UserRetrofitInstance
 import com.danilkharytonov.retrofitroomrepository.data.repository.UserApiRepositoryImpl
 import com.danilkharytonov.retrofitroomrepository.data.repository.UserDBRepositoryImpl
 import com.danilkharytonov.retrofitroomrepository.data.repository.UserStorageRepositoryImpl
