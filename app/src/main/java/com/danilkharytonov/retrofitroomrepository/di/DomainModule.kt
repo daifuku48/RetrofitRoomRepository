@@ -6,7 +6,7 @@ import org.koin.dsl.module
 
 
 val domainModule = module {
-    single {
+    factory {
         GetUsersUseCase(
             apiRepository = get(),
             dbRepository = get(),
@@ -14,7 +14,7 @@ val domainModule = module {
         )
     }
 
-    single {
+    factory {
         GetUserByIdFromDB(
             repository = get()
         )

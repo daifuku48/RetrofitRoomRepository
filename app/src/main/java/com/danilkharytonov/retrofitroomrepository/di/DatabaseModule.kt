@@ -6,7 +6,7 @@ import org.koin.dsl.module
 
 
 val dataBaseModule = module {
-    single {
+    factory {
         Room.databaseBuilder(
             context = get(),
             UserDatabase::class.java,

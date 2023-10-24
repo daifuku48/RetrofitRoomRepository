@@ -9,19 +9,19 @@ import com.danilkharytonov.retrofitroomrepository.domain.repository.UserStorageR
 import org.koin.dsl.module
 
 val repositoryModule = module {
-    single<UserDBRepository> {
+    factory<UserDBRepository> {
         UserDBRepositoryImpl(
             userDao = get()
         )
     }
 
-    single<UserApiRepository> {
+    factory<UserApiRepository> {
         UserApiRepositoryImpl(
             userRetrofitInstance = get()
         )
     }
 
-    single<UserStorageRepository> {
+    factory<UserStorageRepository> {
         UserStorageRepositoryImpl(
             context = get()
         )
