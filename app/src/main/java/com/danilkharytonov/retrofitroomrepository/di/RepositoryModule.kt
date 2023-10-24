@@ -11,13 +11,15 @@ import com.danilkharytonov.retrofitroomrepository.domain.repository.UserDBReposi
 import com.danilkharytonov.retrofitroomrepository.domain.repository.UserStorageRepository
 import dagger.Module
 import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module
-@InstallIn(SingletonComponent::class)
-object RepositoryModule {
+class RepositoryModule(private val context: Application) {
+
+    @Provides
+    fun providesContext() : Application {
+        return context
+    }
 
     @Provides
     @Singleton

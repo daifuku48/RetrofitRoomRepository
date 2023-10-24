@@ -10,15 +10,12 @@ import com.danilkharytonov.retrofitroomrepository.domain.model.User
 import com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_detail.GetUserByIdFromDB
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
-import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 
-class UserDetailViewModel @AssistedInject constructor(
-    @Assisted
-    private val uuid: String,
+class UserDetailViewModel constructor(
     private val getUserByIdFromDB: GetUserByIdFromDB,
 ) : ViewModel() {
 
@@ -33,31 +30,9 @@ class UserDetailViewModel @AssistedInject constructor(
     )
     val user = _user.asStateFlow()
 
-    init {
-        getUserById(uuid)
-    }
-
-    private fun getUserById(uuid: String) {
+    fun getUserById(uuid: String) {
         viewModelScope.launch {
             _user.value = getUserByIdFromDB.execute(uuid = uuid)
-        }
-    }
-
-    @AssistedFactory
-    interface UserIdFactory {
-        fun create(@Assisted uuid: String): UserDetailViewModel
-    }
-
-    companion object {
-        fun providesUserDetailViewModelFactory(
-            factory: UserIdFactory,
-            userUuid: String
-        ): ViewModelProvider.Factory {
-            return object : ViewModelProvider.Factory {
-                override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                    return factory.create(userUuid) as T
-                }
-            }
         }
     }
 }

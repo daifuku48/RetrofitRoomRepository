@@ -7,13 +7,10 @@ import com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_detail.G
 import com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_list.GetUsersUseCase
 import dagger.Module
 import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 
 @Module
-@InstallIn(SingletonComponent::class)
 object DomainModule {
 
     @Provides

@@ -12,11 +12,9 @@ import com.danilkharytonov.retrofitroomrepository.R
 import com.danilkharytonov.retrofitroomrepository.databinding.FragmentUserListBinding
 import com.danilkharytonov.retrofitroomrepository.presentation.activity.MainActivity.Companion.USER_ID
 import com.danilkharytonov.retrofitroomrepository.presentation.base.BaseFragment
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
-@AndroidEntryPoint
-class UserListFragment : BaseFragment<FragmentUserListBinding, UserListViewModel>() {
+class UserListFragment : BaseFragment<FragmentUserListBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -27,9 +25,9 @@ class UserListFragment : BaseFragment<FragmentUserListBinding, UserListViewModel
                 bundleOf(USER_ID to user.login.uuid)
             )
         }, onListEnd = {
-            viewModel.fetchUsersToEnd()
+          //  viewModel.fetchUsersToEnd()
         }, onListStart = {
-            viewModel.fetchUserToStart()
+           // viewModel.fetchUserToStart()
         })
         initList(adapter)
         binding.userList.adapter = adapter
@@ -39,9 +37,9 @@ class UserListFragment : BaseFragment<FragmentUserListBinding, UserListViewModel
     private fun initList(adapter: UserListAdapter) {
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                viewModel.userList.collect { userList ->
-                    adapter.submitList(userList)
-                }
+              //  viewModel.userList.collect { userList ->
+              //      adapter.submitList(userList)
+              //  }
             }
         }
     }

@@ -14,24 +14,14 @@ import com.bumptech.glide.Glide
 import com.danilkharytonov.retrofitroomrepository.R
 import com.danilkharytonov.retrofitroomrepository.databinding.FragmentDetailUserBinding
 import com.danilkharytonov.retrofitroomrepository.presentation.activity.MainActivity.Companion.USER_ID
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-@AndroidEntryPoint
 class UserDetailFragment : Fragment() {
     private var _binding: FragmentDetailUserBinding? = null
     private val binding
         get() = requireNotNull(_binding)
 
-    @Inject
-    lateinit var factory: UserDetailViewModel.UserIdFactory
-    private val viewModel: UserDetailViewModel by viewModels {
-        val userId = arguments?.getString(USER_ID)
-        if (userId != null) {
-            UserDetailViewModel.providesUserDetailViewModelFactory(factory, userId)
-        } else UserDetailViewModel.providesUserDetailViewModelFactory(factory, "0")
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,19 +43,19 @@ class UserDetailFragment : Fragment() {
     private fun initUI() {
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                viewModel.user.collect { user ->
-                    binding.userEmail.text = getString(R.string.email, user.email)
-                    binding.userGender.text = getString(R.string.gender, user.gender)
-                    binding.userFullName.text = getString(
-                        R.string.full_name,
-                        user.name.title,
-                        user.name.firstName,
-                        user.name.lastName
-                    )
-                    Glide.with(requireContext())
-                        .load(user.picture.iconImage)
-                        .into(binding.userIcon)
-                }
+//                viewModel.user.collect { user ->
+//                    binding.userEmail.text = getString(R.string.email, user.email)
+//                    binding.userGender.text = getString(R.string.gender, user.gender)
+//                    binding.userFullName.text = getString(
+//                        R.string.full_name,
+//                        user.name.title,
+//                        user.name.firstName,
+//                        user.name.lastName
+//                    )
+//                    Glide.with(requireContext())
+//                        .load(user.picture.iconImage)
+//                        .into(binding.userIcon)
+//                }
             }
         }
     }

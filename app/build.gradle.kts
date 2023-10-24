@@ -2,7 +2,6 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     kotlin("kapt")
-    id("com.google.dagger.hilt.android")
     id("com.google.devtools.ksp")
 }
 
@@ -53,9 +52,10 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:2.7.4")
 
     //Hilt
-    implementation("com.google.dagger:hilt-android:2.46.1")
-    kapt("androidx.hilt:hilt-compiler:1.0.0")
-    kapt("com.google.dagger:hilt-android-compiler:2.46.1")
+    implementation("com.google.dagger:dagger-android:2.46.1")
+    implementation("com.google.dagger:dagger-android-support:2.46.1")
+    annotationProcessor("com.google.dagger:dagger-android-processor:2.46.1")
+    annotationProcessor("com.google.dagger:dagger-compiler:2.46.1")
 
     //Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")

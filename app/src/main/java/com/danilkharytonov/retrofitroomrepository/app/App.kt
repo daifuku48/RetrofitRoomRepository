@@ -1,7 +1,12 @@
 package com.danilkharytonov.retrofitroomrepository.app
 
 import android.app.Application
-import dagger.hilt.android.HiltAndroidApp
+import com.danilkharytonov.retrofitroomrepository.di.AppComponent
 
-@HiltAndroidApp
-class App : Application()
+class App : Application(){
+    lateinit var appComponent: AppComponent
+    override fun onCreate() {
+        super.onCreate()
+        appComponent = DaggerAppC
+    }
+}
