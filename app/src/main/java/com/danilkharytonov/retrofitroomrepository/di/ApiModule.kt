@@ -9,11 +9,11 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 val apiModule = module {
-    single<HttpLoggingInterceptor> {
+    single {
         HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
     }
 
-    single<OkHttpClient> {
+    single {
         OkHttpClient.Builder()
             .addInterceptor(get<HttpLoggingInterceptor>())
             .build()
@@ -23,7 +23,7 @@ val apiModule = module {
         Retrofit.Builder()
             .baseUrl(UserRetrofitInstance.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
-            .client(get<OkHttpClient>())
+            .client(get())
             .build()
     }
 

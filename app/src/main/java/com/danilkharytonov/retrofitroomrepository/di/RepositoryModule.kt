@@ -13,13 +13,13 @@ import org.koin.dsl.module
 val repositoryModule = module {
     single<UserDBRepository> {
         UserDBRepositoryImpl(
-            userDao = get<UserDao>()
+            userDao = get()
         )
     }
 
     single<UserApiRepository> {
         UserApiRepositoryImpl(
-            userRetrofitInstance = get<UserRetrofitInstance>()
+            userRetrofitInstance = get()
         )
     }
 

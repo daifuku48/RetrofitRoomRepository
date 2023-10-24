@@ -9,17 +9,17 @@ import org.koin.dsl.module
 
 
 val domainModule = module {
-    single<GetUsersUseCase> {
+    single {
         GetUsersUseCase(
-            apiRepository = get<UserApiRepository>(),
-            dbRepository = get<UserDBRepository>(),
-            storageRepository = get<UserStorageRepository>()
+            apiRepository = get(),
+            dbRepository = get(),
+            storageRepository = get()
         )
     }
 
-    single<GetUserByIdFromDB> {
+    single {
         GetUserByIdFromDB(
-            repository = get<UserDBRepository>()
+            repository = get()
         )
     }
 }

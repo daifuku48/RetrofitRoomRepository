@@ -8,9 +8,9 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val ViewModelModule = module {
-    viewModel<UserListViewModel> {
+    viewModel {
         UserListViewModel(
-            getUsersUseCase = get<GetUsersUseCase>()
+            getUsersUseCase = get()
         )
     }
 
