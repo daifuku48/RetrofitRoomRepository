@@ -4,20 +4,30 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.danilkharytonov.retrofitroomrepository.R
+import com.danilkharytonov.retrofitroomrepository.app.App
 import com.danilkharytonov.retrofitroomrepository.databinding.FragmentUserListBinding
 import com.danilkharytonov.retrofitroomrepository.presentation.activity.MainActivity.Companion.USER_ID
 import com.danilkharytonov.retrofitroomrepository.presentation.base.BaseFragment
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class UserListFragment : BaseFragment<FragmentUserListBinding>() {
 
+    @Inject
+    lateinit var factory: UserListViewModelFactory
+    private lateinit var viewModel: UserListViewModel
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (requireContext().applicationContext as App).appComponent.injectUserListFragment(this)
+
+        viewModel = ViewModelProvider(this, factory)[UserListViewModel::class.java]
         val layoutManager = LinearLayoutManager(requireContext())
         val adapter = UserListAdapter({ user ->
             findNavController().navigate(
@@ -25,9 +35,9 @@ class UserListFragment : BaseFragment<FragmentUserListBinding>() {
                 bundleOf(USER_ID to user.login.uuid)
             )
         }, onListEnd = {
-          //  viewModel.fetchUsersToEnd()
+            viewModel.fetchUsersToEnd()
         }, onListStart = {
-           // viewModel.fetchUserToStart()
+            viewModel.fetchUserToStart()
         })
         initList(adapter)
         binding.userList.adapter = adapter
@@ -37,9 +47,9 @@ class UserListFragment : BaseFragment<FragmentUserListBinding>() {
     private fun initList(adapter: UserListAdapter) {
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-              //  viewModel.userList.collect { userList ->
-              //      adapter.submitList(userList)
-              //  }
+                viewModel.userList.collect { userList ->
+                    adapter.submitList(userList)
+                }
             }
         }
     }

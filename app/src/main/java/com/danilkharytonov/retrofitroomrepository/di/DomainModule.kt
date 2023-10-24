@@ -7,14 +7,12 @@ import com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_detail.G
 import com.danilkharytonov.retrofitroomrepository.domain.use_cases.user_list.GetUsersUseCase
 import dagger.Module
 import dagger.Provides
-import javax.inject.Singleton
 
 
 @Module
-object DomainModule {
+class DomainModule {
 
     @Provides
-    @Singleton
     fun providesGetAllUsersFromApiUseCase(
         apiRepository: UserApiRepository,
         dbRepository: UserDBRepository,
@@ -28,7 +26,6 @@ object DomainModule {
     }
 
     @Provides
-    @Singleton
     fun providesGetUserByIdFromDBUseCase(
         repository: UserDBRepository
     ): GetUserByIdFromDB {

@@ -11,14 +11,14 @@ import dagger.Provides
 class AppModule {
 
     @Provides
-    fun providesUserListViewModelFactory(getUsersUseCase: GetUsersUseCase) : UserListViewModelFactory {
+    fun providesUserListViewModelFactory(getUsersUseCase: GetUsersUseCase): UserListViewModelFactory {
         return UserListViewModelFactory(
             getUsersUseCase = getUsersUseCase
         )
     }
 
     @Provides
-    fun providesUserDetailViewModelFactory(getUserByIdFromDB: GetUserByIdFromDB) : UserDetailViewModelFactory {
+    fun providesUserDetailViewModelFactory(getUserByIdFromDB: GetUserByIdFromDB): UserDetailViewModelFactory {
         return UserDetailViewModelFactory(
             getUserByIdFromDB = getUserByIdFromDB
         )

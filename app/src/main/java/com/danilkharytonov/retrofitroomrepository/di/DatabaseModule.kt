@@ -1,19 +1,17 @@
 package com.danilkharytonov.retrofitroomrepository.di
 
-import android.content.Context
+import android.app.Application
 import androidx.room.Room
 import com.danilkharytonov.retrofitroomrepository.data.database.UserDao
 import com.danilkharytonov.retrofitroomrepository.data.database.UserDatabase
 import dagger.Module
 import dagger.Provides
-import javax.inject.Singleton
 
 
 @Module
-object DatabaseModule {
+class DatabaseModule {
     @Provides
-    @Singleton
-    fun providesDatabase(context: Context): UserDatabase {
+    fun providesDatabase(context: Application): UserDatabase {
         return Room.databaseBuilder(
             context = context,
             UserDatabase::class.java,
@@ -22,7 +20,6 @@ object DatabaseModule {
     }
 
     @Provides
-    @Singleton
     fun providesUserDao(userDatabase: UserDatabase): UserDao {
         return userDatabase.getUserDao()
     }

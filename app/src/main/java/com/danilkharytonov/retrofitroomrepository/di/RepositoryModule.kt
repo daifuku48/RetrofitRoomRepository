@@ -11,18 +11,16 @@ import com.danilkharytonov.retrofitroomrepository.domain.repository.UserDBReposi
 import com.danilkharytonov.retrofitroomrepository.domain.repository.UserStorageRepository
 import dagger.Module
 import dagger.Provides
-import javax.inject.Singleton
 
 @Module
-class RepositoryModule(private val context: Application) {
+class RepositoryModule(val context: Application) {
 
     @Provides
-    fun providesContext() : Application {
+    fun providesContext(): Application {
         return context
     }
 
     @Provides
-    @Singleton
     fun providesUserDBRepository(
         userDao: UserDao
     ): UserDBRepository {
@@ -32,7 +30,6 @@ class RepositoryModule(private val context: Application) {
     }
 
     @Provides
-    @Singleton
     fun providesUserApiRepository(
         retrofitInstance: UserRetrofitInstance
     ): UserApiRepository {
@@ -42,7 +39,6 @@ class RepositoryModule(private val context: Application) {
     }
 
     @Provides
-    @Singleton
     fun providesUserStorageRepository(
         context: Application
     ): UserStorageRepository {
