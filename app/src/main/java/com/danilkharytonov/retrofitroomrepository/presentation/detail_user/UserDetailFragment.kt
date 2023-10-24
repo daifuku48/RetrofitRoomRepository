@@ -9,22 +9,11 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.danilkharytonov.retrofitroomrepository.R
 import com.danilkharytonov.retrofitroomrepository.databinding.FragmentDetailUserBinding
-import com.danilkharytonov.retrofitroomrepository.presentation.activity.MainActivity.Companion.USER_ID
 import com.danilkharytonov.retrofitroomrepository.presentation.base.BaseFragment
 import kotlinx.coroutines.launch
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.parameter.parametersOf
 
 
-class UserDetailFragment : BaseFragment<FragmentDetailUserBinding>() {
-
-    private val viewModel: UserDetailViewModel by viewModel {
-        parametersOf(
-            arguments?.getString(
-                USER_ID
-            ) ?: "0"
-        )
-    }
+class UserDetailFragment : BaseFragment<FragmentDetailUserBinding, UserDetailViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -13,12 +13,9 @@ import com.danilkharytonov.retrofitroomrepository.databinding.FragmentUserListBi
 import com.danilkharytonov.retrofitroomrepository.presentation.activity.MainActivity.Companion.USER_ID
 import com.danilkharytonov.retrofitroomrepository.presentation.base.BaseFragment
 import kotlinx.coroutines.launch
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class UserListFragment : BaseFragment<FragmentUserListBinding>() {
-
-    private val viewModel by viewModel<UserListViewModel>()
+class UserListFragment : BaseFragment<FragmentUserListBinding, UserListViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
